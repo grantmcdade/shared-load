@@ -38,7 +38,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
         </v-btn>
       </v-toolbar>
       <v-list class="pt-0" dense>
-        <v-list-tile avatar v-for="item in items" :key="item.title" :to="item.link">
+        <v-list-tile avatar v-for="item in items" :key="item.title" :to="item.link" v-if="item.auth && uid">
           <v-list-tile-action>
             <v-btn icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -55,7 +55,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
       <v-toolbar-title @click="navigateHome" style="cursor: pointer;">Shared Load</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat v-for="item in items" :key="item.title" :to="item.link">
+        <v-btn flat v-for="item in items" :key="item.title" :to="item.link" v-if="item.auth && uid">
           <v-icon left>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
@@ -85,8 +85,8 @@ export default {
       items: [
         { icon: 'group', title: 'Groups', link: '/groups', auth: true },
         { icon: 'list', title: 'Lists', link: '/all_lists', auth: true },
-        { icon: 'lock_open', title: 'Sign in', link: '/login', auth: true },
-        { icon: 'lock', title: 'Sign out', link: '/logout', auth: false }
+        { icon: 'lock_open', title: 'Sign in', link: '/login', auth: false },
+        { icon: 'lock', title: 'Sign out', link: '/logout', auth: true }
       ]
     }
   },
