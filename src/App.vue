@@ -38,7 +38,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
         </v-btn>
       </v-toolbar>
       <v-list class="pt-0" dense>
-        <v-list-tile avatar v-for="item in items" :key="item.title" :to="item.link" v-if="item.auth && uid">
+        <v-list-tile avatar v-for="item in items" :key="item.title" :to="item.link" v-if="visible(item)">
           <v-list-tile-action>
             <v-btn icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -55,7 +55,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
       <v-toolbar-title @click="navigateHome" style="cursor: pointer;">Shared Load</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat v-for="item in items" :key="item.title" :to="item.link" v-if="item.auth && uid">
+        <v-btn flat v-for="item in items" :key="item.title" :to="item.link" v-if="visible(item)">
           <v-icon left dark>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
@@ -93,6 +93,12 @@ export default {
   methods: {
     navigateHome () {
       this.$router.push('/')
+    },
+    visible (item) {
+      if (item.auth) {
+        return this.uid
+      }
+      return true
     }
   },
   mixins: [snackbarMixin]

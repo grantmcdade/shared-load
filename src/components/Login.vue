@@ -19,13 +19,13 @@
     <v-flex>
       <v-card>
         <v-card-title>
-          <h4>Supported Poviders</h4>
+          <h5>Supported Poviders</h5>
         </v-card-title>
         <v-card-text>
         </v-card-text>
         <v-card-actions>
-          <v-btn flat @click="signinWithGoogle">Login with Google
-            <v-icon right>lock_open</v-icon>
+          <v-btn block class="primary" @click="signinWithGoogle">Login with Google
+            <v-icon dark right>lock_open</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -33,7 +33,7 @@
     <v-flex>
       <v-card>
         <v-card-title>
-          <h4>Email and Password</h4>
+          <h5>Email and Password</h5>
         </v-card-title>
         <v-card-text>
           <v-text-field name="email" type="email" label="Email Address" v-model="email">
@@ -42,8 +42,8 @@
           </v-text-field>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="signInWithEmailAndPassord">Signin
-            <v-icon right>lock_open</v-icon>
+          <v-btn block class="primary" @click="signInWithEmailAndPassord">Signin
+            <v-icon dark right>lock_open</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>

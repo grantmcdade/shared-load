@@ -23,22 +23,29 @@
       Welcome to the shared load app. This app allows task lists to be shared between a group of people.
     </v-card-text>
     <v-card-actions>
-      <v-btn flat @click.native="getUser">Is User Signed In</v-btn>
+      <v-btn flat @click.native="getUser">Check User</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import firebase from 'firebase'
+import { messageBus } from '../scripts/message-bus'
 
 export default {
   methods: {
     getUser () {
       const unsub = firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          console.log('User is signed in')
+          messageBus.$emit('addMessage', {
+            type: 'success',
+            text: 'User is signed in'
+          })
         } else {
-          console.log('User is not signed in')
+          messageBus.$emit('addMessage', {
+            type: 'error',
+            text: 'User is not signed in'
+          })
         }
         unsub()
       })

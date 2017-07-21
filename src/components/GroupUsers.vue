@@ -54,6 +54,7 @@
 <script>
 import firebase from 'firebase'
 import { mapGetters } from 'vuex'
+import { messageBus } from '../scripts/message-bus'
 
 export default {
   props: ['groupId'],
@@ -79,8 +80,11 @@ export default {
         return elem.email === this.email
       })
       if (userIndex !== -1) {
-        console.log('This user is already a member of the group')
-        alert('This user is already a member of the group')
+        messageBus.$emit('addMessage', {
+          type: 'success',
+          text: 'This user is already a member of the group'
+        })
+        return
       }
 
       const ref = firebase.database().ref('/users')

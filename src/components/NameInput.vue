@@ -16,14 +16,14 @@
 -->
 <template>
   <v-layout row wrap class="pl-2 pr-2">
-    <v-flex sm1 class="hidden-sm-and-down"></v-flex>
-    <v-flex sm9 xs12>
-      <v-text-field id="inputName" name="inputName" :label="label" v-model="text"></v-text-field>
+    <v-flex md1 class="hidden-sm-and-down"></v-flex>
+    <v-flex md9 sm12 xs12>
+      <v-text-field id="inputName" name="inputName" prepend-icon="group" :label="label" :placeholder="label" v-model="text" required></v-text-field>
     </v-flex>
-    <v-flex sm1 xs12>
-      <v-btn raised block @click="nameEntered">Add</v-btn>
+    <v-flex md1 sm12 xs12>
+      <v-btn block class="primary" @click="nameEntered">Add</v-btn>
     </v-flex>
-    <v-flex sm1 class="hidden-sm-and-down"></v-flex>
+    <v-flex md1 class="hidden-sm-and-down"></v-flex>
   </v-layout>
 </template>
 
