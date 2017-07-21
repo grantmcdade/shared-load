@@ -42,8 +42,16 @@
       <v-card>
         <div class="pl-3 pr-3">
           <v-card-text>
-            <v-text-field name="email" label="Email Address" prepend-icon="email" append-icon="warning" v-model="email" required></v-text-field>
-            <v-btn @click="addUser">Add User</v-btn>
+            <v-layout wrap>
+              <v-flex md11 sm12 xs12>
+                <v-text-field ref="text" name="email" type="email" label="Email Address"
+                  prepend-icon="email" append-icon="warning" v-model="email"
+                  required :rules="validate()"></v-text-field>
+              </v-flex>
+              <v-flex md1 sm12 xs12>
+                <v-btn block primary @click="addUser">Add User</v-btn>
+              </v-flex>
+            </v-layout>
           </v-card-text>
         </div>
       </v-card>
@@ -55,13 +63,15 @@
 import firebase from 'firebase'
 import { mapGetters } from 'vuex'
 import { messageBus } from '../scripts/message-bus'
+import v from 'validate.js'
 
 export default {
   props: ['groupId'],
   data () {
     return {
       users: [],
-      email: ''
+      email: '',
+      valid: false
     }
   },
   methods: {
@@ -120,6 +130,11 @@ export default {
       console.log('Key =', key)
       this.$firebaseRefs.users.child(key).remove()
       firebase.database().ref(`/users/${this.uid}/group_memberships/${key}`).remove()
+    },
+    validate () {
+      const result = v.single(this.email, {presence: true, email: true})
+      this.valid = result === true
+      return result
     }
   },
   watch: {

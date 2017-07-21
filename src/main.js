@@ -21,7 +21,6 @@ import router from './router'
 import store from './store'
 import firebase from 'firebase'
 import VueFire from 'vuefire'
-import VeeValidate from 'vee-validate'
 import Vuetify from 'vuetify'
 import '../node_modules/vuetify/dist/vuetify.min.css'
 
@@ -37,7 +36,6 @@ const config = {
 const firebaseApp = firebase.initializeApp(config)
 
 Vue.use(VueFire)
-Vue.use(VeeValidate)
 Vue.use(Vuetify)
 
 function setUser (user) {
