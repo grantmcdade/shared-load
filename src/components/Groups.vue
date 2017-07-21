@@ -55,7 +55,7 @@ import appNameInput from './NameInput'
 import appBreadcrumb from './Breadcrumb'
 import { mapGetters } from 'vuex'
 import appConfirm from './Confirm'
-import { messageBus } from '../main'
+import { messageBus } from '../scripts/message-bus'
 
 export default {
   computed: {
