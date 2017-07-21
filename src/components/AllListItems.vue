@@ -18,7 +18,7 @@
   <v-flex xs12 sm6>
     <v-card>
       <v-card-title>
-        <h5>Items On The Selected List</h5>
+        <h5 id="itemDetails">Items On The Selected List</h5>
       </v-card-title>
       <v-list>
         <v-list-tile v-for="item in list" :key="item['.key']" :to="`/items/${item['.key']}`">

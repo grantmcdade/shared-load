@@ -15,7 +15,7 @@
     along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
 --><template>
   <v-layout wrap>
-    <v-flex xs12 sm6>
+    <v-flex xs12 :class="{ sm6: $route.params.listId }">
 
       <v-card>
         <v-card-title>
@@ -24,7 +24,7 @@
         </v-card-title>
         <v-list subheader>
           <v-subheader>Lists</v-subheader>
-          <v-list-tile v-for="list in lists" :key="list['.key']" :to="`/all_lists/${list['.key']}`">
+          <v-list-tile v-for="list in lists" :key="list['.key']" :to="`/all_lists/${list['.key']}#itemDetails`">
             <v-list-tile-action>
               <v-icon>list</v-icon>
             </v-list-tile-action>

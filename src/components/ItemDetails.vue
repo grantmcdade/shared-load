@@ -17,7 +17,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <h4>Item Details</h4>
+      <h4 id="itemDetails">Item Details</h4>
     </v-card-title>
     <v-card-text>
       <v-layout>
