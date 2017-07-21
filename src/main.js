@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(u => {
 
 Vue.config.productionTip = false
 
-const messageBuss = new Vue({})
+const messageBus = new Vue({})
 
 /* eslint-disable no-new */
 const app = new Vue({
@@ -66,7 +66,7 @@ const app = new Vue({
 })
 
 export {
-  messageBuss,
+  messageBus,
   app,
   router,
   store,

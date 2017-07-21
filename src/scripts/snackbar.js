@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { messageBuss } from '../main'
+import { messageBus } from '../main'
 
 const snackbarInstance = {
   data () {
@@ -32,7 +32,7 @@ const snackbarInstance = {
     }
   },
   created () {
-    messageBuss.$on('addMessage', payload => {
+    messageBus.$on('addMessage', payload => {
       this.addMessage(payload)
     })
   }

@@ -18,7 +18,7 @@
   <v-layout row wrap class="pl-2 pr-2">
     <v-flex sm1 class="hidden-sm-and-down"></v-flex>
     <v-flex sm9 xs12>
-      <v-text-field id="inputName" name="inputName" :label="label" :value="value" @input="input"></v-text-field>
+      <v-text-field id="inputName" name="inputName" :label="label" v-model="text"></v-text-field>
     </v-flex>
     <v-flex sm1 xs12>
       <v-btn raised block @click="nameEntered">Add</v-btn>
@@ -30,12 +30,23 @@
 <script>
 export default {
   props: ['value', 'label'],
+  data () {
+    return {
+      text: ''
+    }
+  },
   methods: {
     input (event) {
-      this.$emit('input', event.target.value)
+      this.$emit('input', this.text)
     },
     nameEntered () {
-      this.$emit('nameEntered')
+      this.$emit('nameEntered', this.text)
+      this.text = ''
+    }
+  },
+  watch: {
+    value (val) {
+      this.text = val
     }
   }
 }

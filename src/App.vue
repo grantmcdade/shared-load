@@ -29,12 +29,12 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
       {{ snackbarText }}
       <v-btn icon dark flat @click.native="snackbar = false"><v-icon>close</v-icon></v-btn>
     </v-snackbar>
-    <v-navigation-drawer temporary v-model="drawer" :mini-variant.sync="mini" light overflow absolute>
-      <v-toolbar class="pa-0">
+    <v-navigation-drawer temporary clipped v-model="drawer" :mini-variant.sync="mini" light overflow absolute>
+      <v-toolbar class="pa-0 primary" dark>
         <v-toolbar-title>Shared Load</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon dark @click.native.stop="mini = !mini">
-          <v-icon>chevron_left</v-icon>
+        <v-btn icon @click.native.stop="mini = !mini">
+          <v-icon dark>chevron_left</v-icon>
         </v-btn>
       </v-toolbar>
       <v-list class="pt-0" dense>
@@ -50,13 +50,13 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed>
+    <v-toolbar fixed dark class="primary">
       <v-toolbar-side-icon @click.native.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
       <v-toolbar-title @click="navigateHome" style="cursor: pointer;">Shared Load</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="item in items" :key="item.title" :to="item.link" v-if="item.auth && uid">
-          <v-icon left>{{item.icon}}</v-icon>
+          <v-icon left dark>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
       </v-toolbar-items>

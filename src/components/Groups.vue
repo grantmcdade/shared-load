@@ -16,7 +16,7 @@
 -->
 <template>
   <div v-if="uid">
-      <v-dialog v-model="showConfirm" absolute>
+      <v-dialog v-model="showConfirm" persistent>
     <app-confirm message="This will delete the group and all related data. Are you sure?" @confirm="onConfirm"></app-confirm>
       </v-dialog>
     <v-card>
@@ -37,14 +37,14 @@
               <v-icon>people_outline</v-icon>
             </v-btn>
           </v-list-tile-action>
-          <v-list-tile-action @click="deleteGroup(group['.key'])">
+          <v-list-tile-action @click.stop="deleteGroup(group['.key'])">
             <v-btn icon>
               <v-icon>delete</v-icon>
             </v-btn>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-      <app-name-input v-model="groupName" @nameEntered="addGroup" label="Group Name"></app-name-input>
+      <app-name-input @nameEntered="addGroup" label="Group Name"></app-name-input>
     </v-card>
   </div>
 </template>
@@ -55,6 +55,7 @@ import appNameInput from './NameInput'
 import appBreadcrumb from './Breadcrumb'
 import { mapGetters } from 'vuex'
 import appConfirm from './Confirm'
+import { messageBus } from '../main'
 
 export default {
   computed: {
@@ -69,20 +70,24 @@ export default {
     return {
       showConfirm: false,
       onConfirmCallback: null,
-      groupName: '',
       groups: []
     }
   },
   methods: {
-    addGroup () {
-      const groupId = this.$firebaseRefs.groups.push({ name: this.groupName }).key
-      this.groupName = ''
+    addGroup (groupName) {
+      const groupId = this.$firebaseRefs.groups.push({ name: groupName }).key
 
       firebase.database().ref(`/group_users/${groupId}`).push({
         email: this.email,
         uid: this.uid
       })
+
       firebase.database().ref(`/users/${this.uid}/group_memberships`).push(groupId)
+
+      messageBus.$emit('addMessage', {
+        type: 'success',
+        text: 'New group added successefully'
+      })
     },
     deleteGroup (key) {
       this.showConfirm = true
@@ -106,9 +111,12 @@ export default {
       if (this.onConfirmCallback) {
         this.onConfirmCallback(confirmed)
         this.onConfirmCallback = null
+        messageBus.$emit('addMessage', {
+          type: 'success',
+          text: 'The group was deleted successefully'
+        })
       }
       this.showConfirm = false
-      console.log('sfdgdsf')
     }
   },
   watch: {
