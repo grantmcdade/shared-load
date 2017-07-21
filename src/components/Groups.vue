@@ -75,6 +75,10 @@ export default {
   },
   methods: {
     addGroup (groupName) {
+      if (!groupName) {
+        return
+      }
+
       const groupId = this.$firebaseRefs.groups.push({ name: groupName }).key
 
       firebase.database().ref(`/group_users/${groupId}`).push({

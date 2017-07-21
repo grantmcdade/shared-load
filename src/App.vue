@@ -97,8 +97,9 @@ export default {
     visible (item) {
       if (item.auth) {
         return this.uid
+      } else {
+        return !this.uid
       }
-      return true
     }
   },
   mixins: [snackbarMixin]

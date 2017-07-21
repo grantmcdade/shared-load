@@ -21,7 +21,7 @@
       <v-text-field id="inputName" name="inputName" prepend-icon="group" :label="label" :placeholder="label" v-model="text" required></v-text-field>
     </v-flex>
     <v-flex md1 sm12 xs12>
-      <v-btn block class="primary" @click="nameEntered">Add</v-btn>
+      <v-btn block class="primary" @click="nameEntered" :disabled="!text">Add</v-btn>
     </v-flex>
     <v-flex md1 class="hidden-sm-and-down"></v-flex>
   </v-layout>
