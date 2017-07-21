@@ -19,7 +19,6 @@
       <v-dialog v-model="showConfirm" absolute>
     <app-confirm message="This will delete the group and all related data. Are you sure?" @confirm="onConfirm"></app-confirm>
       </v-dialog>
-    <app-messages ref="appMessages"></app-messages>
     <v-card>
       <v-card-title>
         <h5>Groups</h5>
@@ -55,7 +54,6 @@ import firebase from 'firebase'
 import appNameInput from './NameInput'
 import appBreadcrumb from './Breadcrumb'
 import { mapGetters } from 'vuex'
-import appMessages from './Messages'
 import appConfirm from './Confirm'
 
 export default {
@@ -65,7 +63,6 @@ export default {
   components: {
     appBreadcrumb,
     appNameInput,
-    appMessages,
     appConfirm
   },
   data () {
