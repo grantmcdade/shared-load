@@ -25,9 +25,26 @@ module.exports = function (config) {
     coverageReporter: {
       dir: './coverage',
       reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' }
+        {
+          type: 'lcov',
+          subdir: '.'
+        },
+        {
+          type: 'text-summary'
+        }
       ]
+    },
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
     }
   })
+
+  if (process.env.TRAVIS) {
+    config.set({
+      browsers: ['Chrome_travis_ci']
+    })
+  }
 }
