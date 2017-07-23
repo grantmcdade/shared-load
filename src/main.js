@@ -38,7 +38,7 @@ const firebaseApp = firebase.initializeApp(config)
 Vue.use(VueFire)
 Vue.use(Vuetify)
 
-function setUser (user) {
+function setUser(user) {
   if (user) {
     store.commit('SET_UID', user.uid)
     store.commit('SET_EMAIL', user.email)

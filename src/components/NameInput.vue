@@ -18,21 +18,24 @@
   <v-layout row wrap class="pl-2 pr-2">
     <v-flex md1 class="hidden-sm-and-down"></v-flex>
     <v-flex md9 sm12 xs12>
-      <v-text-field id="inputName" name="inputName" prepend-icon="group" :label="label" :placeholder="label" v-model="text" required></v-text-field>
+      <v-text-field id="inputName" name="inputName" prepend-icon="group" :label="label" :placeholder="label" v-model="text" required :rules="validate()"></v-text-field>
     </v-flex>
     <v-flex md1 sm12 xs12>
-      <v-btn block class="primary" @click="nameEntered" :disabled="!text">Add</v-btn>
+      <v-btn block class="primary" :disabled="!valid" @click="nameEntered">Add</v-btn>
     </v-flex>
     <v-flex md1 class="hidden-sm-and-down"></v-flex>
   </v-layout>
 </template>
 
 <script>
+import v from 'validate.js'
+
 export default {
   props: ['value', 'label'],
   data () {
     return {
-      text: ''
+      text: '',
+      valid: false
     }
   },
   methods: {
@@ -42,6 +45,11 @@ export default {
     nameEntered () {
       this.$emit('nameEntered', this.text)
       this.text = ''
+    },
+    validate () {
+      const result = v.single(this.text, {presence: true})
+      this.valid = result === undefined
+      return result
     }
   },
   watch: {

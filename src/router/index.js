@@ -34,13 +34,14 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      return { selector: to.hash }
+      return {
+        selector: to.hash
+      }
     }
   },
-  routes: [
-    {
+  routes: [{
       path: '/',
       component: Home
     },
@@ -61,7 +62,7 @@ export default new Router({
       path: '/groups/:groupId',
       component: GroupDetails,
       props: true,
-      beforeEnter (to, from, next) {
+      beforeEnter(to, from, next) {
         const unsub = firebase.auth().onAuthStateChanged(user => {
           if (user) {
             next()

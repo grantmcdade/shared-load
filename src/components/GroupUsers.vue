@@ -133,7 +133,7 @@ export default {
     },
     validate () {
       const result = v.single(this.email, {presence: true, email: true})
-      this.valid = result === true
+      this.valid = result === undefined
       return result
     }
   },
