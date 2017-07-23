@@ -1,6 +1,21 @@
 language: node_js
+node_js:
+  - "node"
 deploy:
   provider: firebase
   token:
     secure: EI41ee3izyNCKOJiBeTRfZiqQPHNT+rhq0CMla1NZRwObf2AMz0Nr33evmeRoebzYH4r1busdoiTSKs69ndieA0vwYtgfU88V0xrUTTWE0CfdaJNw3ZTrpF9AUL+/MKPLCqKJOfqnJxz6d5s6PALix0HvrXIMtwNwuaAvYCcCmSU3bafrFflLfFC8RvDdo90fS+YT4X+9x2Mo0XkJMm4+lGaJIoyDlceqR0xqXx61fd5v6MdSvAuip26TGxgtMDAmsZz+u4FdL8u1+7rWSKRwySn9zjgA0uFJX77TjS0hwyJeKFjWHnfsXv9IG6kN2583KONcwnMoAyKqlptnztGB1ecs+/fgzEab1+x124UYZBH4q7jMWMdr7cX62lnMq00u8ZdfhR25DzPykzgo/B7HLPKfH/jpkILfxvUIkeTqKFVvgOXBfYHtsBB8rtIK9qp1ds5v3pt+0zupCVVlmbm6IS+/mreUDowOn3NqfWJGSL0/Tx6DM4hlQqsnQGcguAHKOOxX/vpKBsLcg+ln2xoiSWN7kN7L/7f/ex6hDZ+jQtKFf93jUKG1pN3H4Sdh8mXRdVIHYtiUEJNrjL6zXe6I0a9dfBDVbdDw/ZpWgqL5mG/q4ROjUtYNu1lS0IEvYEofJ0/TdJ6N+Wwx6wTDR9xBRGHVPEomEXh4QNQHC1o/vA=
 project: "menal-load-test"
+cache:
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
