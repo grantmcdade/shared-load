@@ -23,17 +23,10 @@ import firebase from 'firebase'
 import VueFire from 'vuefire'
 import Vuetify from 'vuetify'
 import '../node_modules/vuetify/dist/vuetify.min.css'
+import config from '../local-settings.js'
 
 // Initialize Firebase
-const config = {
-  apiKey: 'AIzaSyB-qAtdvDojruWBVzGWDXapvOv4SYlxQfo',
-  authDomain: 'menal-load-test.firebaseapp.com',
-  databaseURL: 'https://menal-load-test.firebaseio.com',
-  projectId: 'menal-load-test',
-  storageBucket: 'menal-load-test.appspot.com',
-  messagingSenderId: '479864308461'
-}
-const firebaseApp = firebase.initializeApp(config)
+const firebaseApp = firebase.initializeApp(config.firebase)
 
 Vue.use(VueFire)
 Vue.use(Vuetify)
