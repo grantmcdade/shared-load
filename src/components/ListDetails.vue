@@ -41,7 +41,7 @@
         </v-list-tile>
       </v-list>
     </v-card-text>
-    <app-name-input v-model="itemName" @nameEntered="addItem" label="Item Name"></app-name-input>
+    <app-name-input @nameEntered="addItem" label="Item Name"></app-name-input>
   </v-card>
 </template>
 
@@ -57,8 +57,7 @@ export default {
   data () {
     return {
       items: [],
-      breadCrumb: [],
-      itemName: ''
+      breadCrumb: []
     }
   },
   components: {
@@ -69,8 +68,8 @@ export default {
     ...mapGetters(['selectedGroup', 'selectedList'])
   },
   methods: {
-    addItem () {
-      this.$firebaseRefs.items.push({ name: this.itemName })
+    addItem (itemName) {
+      this.$firebaseRefs.items.push({ name: itemName })
       this.itemName = ''
     },
     deleteItem (key) {

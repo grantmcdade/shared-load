@@ -29,7 +29,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
       {{ snackbarText }}
       <v-btn icon dark flat @click.native="snackbar = false"><v-icon>close</v-icon></v-btn>
     </v-snackbar>
-    <v-navigation-drawer temporary clipped v-model="drawer" :mini-variant.sync="mini" light overflow absolute>
+    <v-navigation-drawer temporary v-model="drawer" :mini-variant.sync="mini" light>
       <v-toolbar class="pa-0 primary" dark>
         <v-toolbar-title>Shared Load</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -38,7 +38,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
         </v-btn>
       </v-toolbar>
       <v-list class="pt-0" dense>
-        <v-list-tile avatar v-for="item in items" :key="item.title" :to="item.link" v-if="visible(item)">
+        <v-list-tile v-for="item in items" :key="item.title" :to="item.link" v-if="visible(item)">
           <v-list-tile-action>
             <v-btn icon>
               <v-icon>{{ item.icon }}</v-icon>

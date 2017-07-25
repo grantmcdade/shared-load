@@ -18,18 +18,19 @@
   <v-card>
     <v-card-title>
       <h4>Group Details</h4>
-      <span v-if="selectedGroup" class="ml-3">for {{selectedGroup.name}}</span>
+      <span v-if="selectedGroup && !editGroupName" class="ml-3" @click="startEditGroupName">for {{selectedGroup.name}}</span>
+      <v-text-field v-else-if="editGroupName" autofocus v-model="groupName" @keydown.enter="saveGroupName" @blur="saveGroupName"></v-text-field>
       <v-spacer></v-spacer>
       <span><strong>Group Id:</strong> {{groupId}}</span>
     </v-card-title>
 
     <v-list>
       <v-list-tile v-for="list in lists" :key="list['.key']">
-        <v-list-tile-action @click="setSelectedList(list)">
+        <v-list-tile-action @click="setSelectedList(list)" class="hidden-xs-only">
           <v-icon>list</v-icon>
         </v-list-tile-action>
         <v-list-tile-content @click="setSelectedList(list)">
-          {{list.name}}
+          <v-list-tile-title>{{list.name}}</v-list-tile-title>
         </v-list-tile-content>
         <v-list-tile-action @click="deleteList(list['.key'])">
           <v-btn icon>
@@ -38,7 +39,7 @@
         </v-list-tile-action>
       </v-list-tile>
     </v-list>
-    <app-name-input v-model="itemName" @nameEntered="addItem" label="List Name"></app-name-input>
+    <app-name-input @nameEntered="addItem" label="List Name"></app-name-input>
   </v-card>
 </template>
 
@@ -54,7 +55,8 @@ export default {
   data () {
     return {
       lists: [],
-      itemName: ''
+      editGroupName: false,
+      groupName: ''
     }
   },
   computed: {
@@ -65,9 +67,8 @@ export default {
     appNameInput
   },
   methods: {
-    addItem () {
-      this.$firebaseRefs.lists.push({ name: this.itemName })
-      this.itemName = ''
+    addItem (listName) {
+      this.$firebaseRefs.lists.push({ name: listName })
     },
     deleteList (key) {
       this.$firebaseRefs.lists.child(key).remove()
@@ -84,6 +85,15 @@ export default {
     setSelectedList (list) {
       this.$store.commit('SET_SELECTED_LIST', list)
       this.$router.push(`/lists/${list['.key']}`)
+    },
+    startEditGroupName () {
+      this.editGroupName = true
+      this.groupName = this.selectedGroup.name
+    },
+    saveGroupName (event) {
+      const ref = firebase.database().ref(`/users/${this.uid}/my_groups/${this.groupId}`)
+      ref.update({ name: this.groupName })
+      this.editGroupName = false
     }
   },
   watch: {
