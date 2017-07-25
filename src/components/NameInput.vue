@@ -28,7 +28,39 @@
 </template>
 
 <script>
-module.exports = require('./NameInput.ts').default.vueComponentOptions
+import validate from 'validate.js'
+
+export default {
+  props: ['value', 'label'],
+  data () {
+    return {
+      text: '',
+      valid: false
+    }
+  },
+  methods: {
+    input () {
+      this.$emit('input', this.text)
+    },
+
+    nameEntered () {
+      this.$emit('nameEntered', this.text)
+      this.text = ''
+    },
+    validate () {
+      if (validate) {
+        const result = validate.single(this.text, { presence: true })
+        this.valid = result === undefined
+        return result
+      }
+    }
+  },
+  watch: {
+    value (val, oldVal) {
+      this.text = val
+    }
+  }
+}
 </script>
 
 <style>
