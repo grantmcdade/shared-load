@@ -6004,7 +6004,7 @@ vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
-vue-inject@^1.0.0:
+vue-inject@^1.0.0, vue-inject@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/vue-inject/-/vue-inject-1.0.1.tgz#7db366a089df6879f23c80e8cc9cf26e6834f5f2"
   dependencies:
