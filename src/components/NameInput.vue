@@ -31,7 +31,6 @@
 import validate from 'validate.js'
 
 export default {
-  dependencies: ['myService'],
   props: ['value', 'label'],
   data () {
     return {

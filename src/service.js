@@ -1,9 +1,4 @@
 import injector from 'vue-inject'
+import GroupService from './services/groups-service'
 
-class MyService {
-  hello () {
-    console.log('Hello World!')
-  }
-}
-
-injector.service('myService', MyService)
+injector.service('GroupService', GroupService)

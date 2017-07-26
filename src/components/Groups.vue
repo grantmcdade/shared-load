@@ -24,10 +24,9 @@
         <h5>Groups</h5>
       </v-card-title>
       <v-list>
-        <app-group-list-tile v-for="group in groups" :key="group['.key']" :group="group" :actions="actions"
-         :editGroup="editGroup" @selectGroup="setSelectedGroup" @doAction="doAction" @editName="onEditName"></app-group-list-tile>
+        <app-group-list-tile v-for="group in groups" :key="group['.key']" :group="group" :actions="actions" @selectGroup.passive="setSelectedGroup" @doAction.passive="doAction" @editName.passive="onEditName"></app-group-list-tile>
       </v-list>
-      <app-name-input @nameEntered="addGroup" label="Group Name"></app-name-input>
+      <app-name-input @nameEntered.passive="addGroup" label="Group Name"></app-name-input>
     </v-card>
   </div>
 </template>
@@ -42,6 +41,7 @@ import appConfirm from './Confirm.vue'
 import { messageBus } from '../scripts/message-bus'
 
 export default {
+  dependencies: ['GroupService'],
   computed: {
     ...mapGetters(['uid', 'email'])
   },
@@ -60,28 +60,15 @@ export default {
         { title: 'Edit Group', icon: 'mode_edit', action: 'edit' },
         { title: 'Group Users', icon: 'people_outline', action: 'group_users' },
         { title: 'Delete Group', icon: 'delete', action: 'delete' }
-      ],
-      editGroup: ''
+      ]
     }
   },
   methods: {
     addGroup (groupName) {
-      if (!groupName) {
-        return
-      }
-
-      const groupId = this.$firebaseRefs.groups.push({ name: groupName }).key
-
-      firebase.database().ref(`/group_users/${groupId}`).push({
-        email: this.email,
-        uid: this.uid
-      })
-
-      firebase.database().ref(`/users/${this.uid}/group_memberships`).push(groupId)
-
-      messageBus.$emit('addMessage', {
-        type: 'success',
-        text: 'New group added successefully'
+      this.GroupService.create({
+        uid: this.uid,
+        groupName,
+        email: this.email
       })
     },
     deleteGroup (key) {
@@ -124,11 +111,9 @@ export default {
           this.$router.push(`/group_users/${payload.key}`)
           break
         case 'edit':
-          if (this.editGroup) {
-            let group = this.groups.find(g => g['.key'] === this.editGroup)
-            this.updateGroupName(this.editGroup, group.name)
-          } else {
-            this.editGroup = payload.key
+          const group = this.groups.find(g => g['.key'] === payload.editGroup)
+          if (group) {
+            this.updateGroupName(payload.editGroup, group.name)
           }
           break
         default:
@@ -137,18 +122,22 @@ export default {
       }
     },
     onEditName (group) {
+      console.log('In onEditName', group)
       if (group) {
         this.updateGroupName(group['.key'], group.name)
       }
     },
-    updateGroupName(key, name) {
-      this.$firebaseRefs.groups.child(`${key}`).update({ name })
+    updateGroupName (key, name) {
       this.editGroup = ''
+      this.$firebaseRefs.groups.child(`${key}`).update({ name })
     }
   },
   watch: {
     uid (value) {
       this.bindGroups(value)
+    },
+    editGroup (val, old) {
+      console.log(val, old)
     }
   },
   created () {
