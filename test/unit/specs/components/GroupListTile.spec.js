@@ -58,8 +58,8 @@ describe('GroupListTile.vue', function () {
 
   it('should render the actions', function () {
     const items = vm.$el.querySelectorAll('v-list-tile-action')
-    expect(items.length).to.equal(8)
-    expect(items[5].querySelector('v-icon').textContent).to.equal('mode_edit')
+    expect(items.length).to.equal(4)
+    expect(items[1].querySelector('v-icon').textContent).to.equal('mode_edit')
   })
 
   it('should raise the doAction event when the delete action is clicked', function (done) {
@@ -70,63 +70,54 @@ describe('GroupListTile.vue', function () {
     items[2].click()
   })
 
-  const getActionButton = (name, location) => {
-    if (location === 'menu') {
-      return vm.$el.querySelector(`v-btn[data-menu-action=${name}]`)
-    }
-    return vm.$el.querySelector(`v-btn[data-action=${name}]`)
-  }
-
-  const runAction = (name, location, afterAction) => {
+  const runAction = (name, afterAction, errorCallback) => {
     try {
-      const item = getActionButton(name, location)
+      const item = vm.$el.querySelector(`v-btn[data-action=${name}]`)
       item.click()
-      vm.$nextTick().then(() => afterAction())
+      vm.$nextTick().then(() => afterAction()).catch(reason => {
+        if (errorCallback) errorCallback(reason)
+      })
     } catch (error) {
       console.log(error)
     }
   }
 
-  ['', 'menu'].forEach(location => {
-    vm = createModel()
-    it(`should set the edit group when edit is clicked (${location})`, function (done) {
-      expect(vm.editGroup).to.equal('')
-      runAction('edit', location, () => {
-        expect(vm.editGroup).to.equal('test_key')
+  it(`should set the edit group when edit is clicked`, function (done) {
+    expect(vm.editGroup).to.equal('')
+    runAction('edit', () => {
+      expect(vm.editGroup).to.equal('test_key')
+      done()
+    })
+  })
+
+  it(`should save the group when editing and the edit button is clicked`, function (done) {
+    let payload
+    vm.$on('editName', pl => {
+      payload = pl
+    })
+    expect(vm.editGroup).to.equal('')
+    runAction('edit', () => {
+      expect(vm.editGroup).to.equal('test_key')
+      runAction('edit', () => {
+        expect(payload).to.not.be.undefined
+        expect(payload.name).to.equal('test_name')
+        expect(payload['.key']).to.equal('test_key')
         done()
       })
     })
+  })
 
-    vm = createModel()
-    it(`should save the group when editing and the edit button is clicked (${location})`, function (done) {
-      let payload
-      vm.$on('editName', pl => {
-        payload = pl
-      })
-      expect(vm.editGroup).to.equal('')
-      runAction('edit', location, () => {
-        expect(vm.editGroup).to.equal('test_key')
-        runAction('edit', location, () => {
-          expect(payload).to.not.be.undefined
-          expect(payload.name).to.equal('test_name')
-          expect(payload['.key']).to.equal('test_key')
-          done()
-        })
-      })
+  it(`should navigate to group users when the Users button is clicked`, function () {
+    runAction('group_users', () => {
+      expect(vm.$route.path).to.be('/group_users')
     })
+  })
 
-    vm = createModel()
-    it(`should navigate to group users when the Users button is clicked (${location})`, function () {
-      runAction('group_users', location, () => {
-        expect(vm.$route.path).to.be('/group_users')
-      })
-    })
-
-    vm = createModel()
-    it(`should raise the doAction event when the delete button is clicked (${location})`, function (done) {
-      const doAction = sinon.spy()
-      vm.$on('doAction', doAction)
-      runAction('delete', location, () => {
+  it(`should raise the doAction event when the delete button is clicked`, function (done) {
+    const doAction = sinon.spy()
+    vm.$on('doAction', doAction)
+    try {
+      runAction('delete', () => {
         try {
           expect(doAction).calledOnce
           expect(doAction).calledWith({
@@ -138,12 +129,14 @@ describe('GroupListTile.vue', function () {
         }
         done()
       })
-    })
+    } catch (error) {
+      done(error)
+    }
   })
 
   it('should fire the "editName" event when the doActionInternal runs', function (done) {
     expect(vm.editGroup).to.equal('')
-    runAction('edit', location, () => {
+    runAction('edit', () => {
       try {
         const editName = sinon.spy()
         expect(vm.editGroup).to.equal('test_key')
@@ -158,7 +151,7 @@ describe('GroupListTile.vue', function () {
       } catch (error) {
         done(error)
       }
-    })
+    }, done)
   })
 
   it('should run selectOrEdit when the list item is clicked', function (done) {
@@ -175,7 +168,7 @@ describe('GroupListTile.vue', function () {
   })
 
   it('should do nothing when editing and the list item is clicked', function (done) {
-    runAction('edit', '', () => {
+    runAction('edit', () => {
       const item = vm.$el.querySelector('v-list-tile-content')
       const selectGroup = sinon.spy()
       vm.$on('selectGroup', selectGroup)
@@ -185,7 +178,7 @@ describe('GroupListTile.vue', function () {
           expect(selectGroup).to.not.have.been.called
           done()
         })
+        .catch(reason => done(reason))
     })
   })
 })
-

@@ -12,27 +12,17 @@
         <v-icon>{{action.icon}}</v-icon>
       </v-btn>
     </v-list-tile-action>
-    <v-list-tile-action class="hidden-sm-and-up">
-      <v-menu :ref="group['.key']" :nudge-right="26">
-        <v-btn icon slot="activator">
-          <v-icon>arrow_drop_down</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile v-for="action in actions" :key="action.action">
-            <v-list-tile-action>
-              <v-btn :data-menu-action="action.action" icon @click="doActionInternal(action.action, group)">
-                <v-icon>{{action.icon}}</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </v-list-tile-action>
+    <app-action-menu :actions="actions" :group="group" @doAction="menuAction"></app-action-menu>
   </v-list-tile>
 </template>
 
 <script>
+import appActionMenu from './ActionMenu'
+
 export default {
+  comments: {
+    appActionMenu
+  },
   props: ['group', 'actions'],
   data () {
     return {
@@ -64,6 +54,9 @@ export default {
           this.$emit('doAction', params)
           break
       }
+    },
+    menuAction (payload) {
+      this.doActionInternal(payload.action, payload.group)
     }
   }
 }
