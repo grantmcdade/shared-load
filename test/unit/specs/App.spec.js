@@ -1,5 +1,5 @@
-import App from '@/App'
 import { mockStore, mockRouter, mount } from 'vuenit'
+import App from '@/App'
 
 describe('App.vue', () => {
   it('should render correct contents', () => {

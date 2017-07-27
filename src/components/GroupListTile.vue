@@ -8,7 +8,7 @@
       <v-text-field v-else v-model="group.name" autofocus @keydown.enter="doActionInternal('editName', group)"></v-text-field>
     </v-list-tile-content>
     <v-list-tile-action v-for="action in actions" :key="action.action" class="hidden-xs-only list__tile__action--stack">
-      <v-btn icon flat @click="doActionInternal(action.action, group)">
+      <v-btn :data-action="action.action" icon flat @click="doActionInternal(action.action, group)">
         <v-icon>{{action.icon}}</v-icon>
       </v-btn>
     </v-list-tile-action>
@@ -20,7 +20,7 @@
         <v-list>
           <v-list-tile v-for="action in actions" :key="action.action">
             <v-list-tile-action>
-              <v-btn icon @click="doActionInternal(action.action, group)">
+              <v-btn :data-menu-action="action.action" icon @click="doActionInternal(action.action, group)">
                 <v-icon>{{action.icon}}</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -49,13 +49,10 @@ export default {
       switch (action) {
         case 'edit':
           if (this.editGroup) {
-            console.log('In doAction completeEdit', action, group)
             this.$emit('editName', group)
             this.editGroup = ''
           } else {
-            console.log('In doAction startEdit', action, group)
             this.editGroup = group['.key']
-            console.log(this.$refs[group['.key']])
           }
           break
         case 'editName':
@@ -63,7 +60,8 @@ export default {
           this.editGroup = ''
           break
         default:
-          this.$emit('doAction', { action, key: group['.key'] })
+          const params = { action, key: group['.key'] }
+          this.$emit('doAction', params)
           break
       }
     }
