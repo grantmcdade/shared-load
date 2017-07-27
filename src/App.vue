@@ -31,7 +31,7 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
     </v-snackbar>
     <v-navigation-drawer temporary v-model="drawer" :mini-variant.sync="mini" light>
       <v-toolbar class="pa-0 primary" dark>
-        <v-toolbar-title>Shared Load</v-toolbar-title>
+        <v-toolbar-title @click="navigateHome" style="cursor: pointer;">Shared Load</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click.native.stop="mini = !mini">
           <v-icon dark>chevron_left</v-icon>

@@ -25,19 +25,7 @@
     </v-card-title>
 
     <v-list>
-      <v-list-tile v-for="list in lists" :key="list['.key']">
-        <v-list-tile-action @click="setSelectedList(list)" class="hidden-xs-only">
-          <v-icon>list</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content @click="setSelectedList(list)">
-          <v-list-tile-title>{{list.name}}</v-list-tile-title>
-        </v-list-tile-content>
-        <v-list-tile-action @click="deleteList(list['.key'])">
-          <v-btn icon>
-            <v-icon>delete</v-icon>
-          </v-btn>
-        </v-list-tile-action>
-      </v-list-tile>
+      <app-list-list-tile v-for="list in lists" :key="list['.key']" :list="list"></app-list-list-tile>
     </v-list>
     <app-name-input @nameEntered="addItem" label="List Name"></app-name-input>
   </v-card>
@@ -49,6 +37,7 @@ import { mapGetters } from 'vuex'
 import appBreadcrumb from './Breadcrumb'
 import appNameInput from './NameInput'
 import { getGroup } from '../scripts/groups'
+import appListListTile from './ListListTile'
 
 export default {
   props: ['groupId'],
@@ -64,7 +53,8 @@ export default {
   },
   components: {
     appBreadcrumb,
-    appNameInput
+    appNameInput,
+    appListListTile
   },
   methods: {
     addItem (listName) {

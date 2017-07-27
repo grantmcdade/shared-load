@@ -4,14 +4,14 @@ import { messageBus } from '../scripts/message-bus'
 export default class GroupService {
   create(options) {
     if (!options.groupName) {
-      return
+      throw new Error('Group name is required')
     }
 
     const groupId = firebase.database().ref(`/users/${options.uid}/my_groups`).push({
       name: options.groupName
     }).key
 
-    firebase.database().ref(`/group_users/${options.groupId}`).push({
+    firebase.database().ref(`/group_users/${groupId}`).push({
       email: options.email,
       uid: options.uid
     })

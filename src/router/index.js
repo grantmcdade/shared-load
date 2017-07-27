@@ -22,7 +22,7 @@ const Home = resolve => require(['../components/Home'], resolve)
 const Groups = resolve => require(['../components/Groups'], resolve)
 const Login = resolve => require(['../components/Login'], resolve)
 const Logout = resolve => require(['../components/Logout'], resolve)
-const GroupDetails = resolve => require(['../components/GroupDetails'], resolve)
+const Lists = resolve => require(['../components/Lists'], resolve)
 const ListDetails = resolve => require(['../components/ListDetails'], resolve)
 const ItemDetails = resolve => require(['../components/ItemDetails'], resolve)
 const UnknownPage = resolve => require(['../components/UnknownPage'], resolve)
@@ -60,7 +60,7 @@ export default new Router({
     },
     {
       path: '/groups/:groupId',
-      component: GroupDetails,
+      component: Lists,
       props: true,
       beforeEnter(to, from, next) {
         const unsub = firebase.auth().onAuthStateChanged(user => {
