@@ -20,7 +20,8 @@
 import appActionMenu from './ActionMenu'
 
 export default {
-  comments: {
+  name: 'GroupListTile',
+  components: {
     appActionMenu
   },
   props: ['group', 'actions'],

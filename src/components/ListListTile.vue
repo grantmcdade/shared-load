@@ -15,16 +15,25 @@
 </template>
 
 <script>
+import appActionMenu from './ActionMenu'
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'ListListTile',
   props: ['list'],
   computed: {
     ...mapGetters(['uid', 'selectedGroup'])
   },
+  components: {
+    appActionMenu
+  },
   methods: {
     deleteList (key) {
       this.$emit('deleteList', key)
+    },
+    setSelectedList (list) {
+      this.$store.commit('SET_SELECTED_LIST', list)
+      this.$router.push(`/lists/${list['.key']}`)
     }
   }
 }

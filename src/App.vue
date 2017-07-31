@@ -16,18 +16,11 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <template>
   <v-app>
-    <v-snackbar
-      :success="snackbarType === 'success'"
-      :info="snackbarType === 'info'"
-      :warning="snackbarType === 'warning'"
-      :error="snackbarType === 'error'"
-      :primary="snackbarType === 'primary'"
-      :secondary="snackbarType === 'secondary'"
-      :top="true"
-      v-model="snackbar"
-    >
+    <v-snackbar :success="snackbarType === 'success'" :info="snackbarType === 'info'" :warning="snackbarType === 'warning'" :error="snackbarType === 'error'" :primary="snackbarType === 'primary'" :secondary="snackbarType === 'secondary'" :top="true" v-model="snackbar">
       {{ snackbarText }}
-      <v-btn icon dark flat @click.native="snackbar = false"><v-icon>close</v-icon></v-btn>
+      <v-btn icon dark flat @click.native="snackbar = false">
+        <v-icon>close</v-icon>
+      </v-btn>
     </v-snackbar>
     <v-navigation-drawer temporary v-model="drawer" :mini-variant.sync="mini" light>
       <v-toolbar class="pa-0 primary" dark>
@@ -71,10 +64,11 @@ along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import snackbarMixin from './scripts/snackbar'
 
 export default {
+  name: 'App',
   computed: {
     ...mapGetters(['uid'])
   },

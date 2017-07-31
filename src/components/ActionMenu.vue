@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  name: 'ActionMenu',
   props: ['group', 'actions'],
   methods: {
     doAction (action, group) {

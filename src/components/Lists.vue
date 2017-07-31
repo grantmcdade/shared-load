@@ -72,10 +72,6 @@ export default {
           .catch(err => console.log(err))
       }
     },
-    setSelectedList (list) {
-      this.$store.commit('SET_SELECTED_LIST', list)
-      this.$router.push(`/lists/${list['.key']}`)
-    },
     startEditGroupName () {
       this.editGroupName = true
       this.groupName = this.selectedGroup.name

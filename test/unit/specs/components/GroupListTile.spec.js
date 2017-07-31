@@ -181,4 +181,10 @@ describe('GroupListTile.vue', function () {
         .catch(reason => done(reason))
     })
   })
+
+  it('should call doActionInternal', function () {
+    const doActionInternal = sinon.stub(vm, 'doActionInternal')
+    vm.menuAction({ action: '', group: null })
+    expect(doActionInternal).to.have.been.calledOnce
+  })
 })

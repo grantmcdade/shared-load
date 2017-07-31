@@ -41,6 +41,7 @@ import appConfirm from './Confirm.vue'
 import { messageBus } from '../scripts/message-bus'
 
 export default {
+  name: 'Groups',
   dependencies: ['GroupService'],
   computed: {
     ...mapGetters(['uid', 'email'])

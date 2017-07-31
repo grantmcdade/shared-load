@@ -57,26 +57,14 @@ describe('ActionMenu.vue', function () {
     expect(items[0].querySelector('v-icon').textContent).to.equal('mode_edit')
   })
 
-  const waitForNextTick = (model) => {
-    return new Promise((resolve, reject) => {
-      try {
-        model.$nextTick(() => resolve(model))
-      } catch (error) {
-        reject(error)
-      }
-    })
-  }
-
   it('should raise the doAction event for any action', function (done) {
     const item = vm.$el.querySelector('v-list-tile-action > v-btn')
     const doAction = sinon.spy()
     vm.$on('doAction', doAction)
     item.click()
-    waitForNextTick(vm)
-    .then(model => {
+    vm.$nextTick(() => {
       expect(doAction).to.have.been.called
       done()
     })
-    .catch(reason => done(reason))
   })
 })

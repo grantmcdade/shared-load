@@ -24,11 +24,7 @@ import VueFire from 'vuefire'
 import Vuetify from 'vuetify'
 import injector from 'vue-inject'
 import '../node_modules/vuetify/dist/vuetify.min.css'
-import config from '../local-settings.js'
 import './service'
-
-// Initialize Firebase
-const firebaseApp = firebase.initializeApp(config.firebase)
 
 Vue.use(VueFire)
 Vue.use(injector)
@@ -61,6 +57,5 @@ export {
   app,
   router,
   store,
-  firebaseApp,
   setUser
 }

@@ -35,7 +35,7 @@
           <v-list-tile-content>
             {{item.name}}
           </v-list-tile-content>
-          <v-list-tile-action @click="deleteItem(item['.key'])">
+          <v-list-tile-action @click.stop="deleteItem(item['.key'])">
             <v-icon>delete</v-icon>
           </v-list-tile-action>
         </v-list-tile>
@@ -69,7 +69,9 @@ export default {
   },
   methods: {
     addItem (itemName) {
-      this.$firebaseRefs.items.push({ name: itemName })
+      const item = { name: itemName }
+      const key = this.$firebaseRefs.items.push(item).key
+      firebase.database().ref(`/items/${key}`).update(item)
       this.itemName = ''
     },
     deleteItem (key) {

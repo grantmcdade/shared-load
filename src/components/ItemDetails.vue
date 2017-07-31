@@ -18,12 +18,22 @@
   <v-card>
     <v-card-title>
       <h4 id="itemDetails">Item Details</h4>
+      <span v-if="item" class="ml-3">for {{item.name}}</span>
     </v-card-title>
     <v-card-text>
-      <v-layout>
+      <v-layout row>
         <v-flex xs12>
           <strong>Item Id:</strong> {{itemId}}
         </v-flex>
+      </v-layout>
+      <v-layout v-if="item" row wrap>
+        <v-flex xs12 md6>
+          <v-select :items="users" item-text="name" item-value="uid" v-model="item.assignedTo" label="Assigned To"></v-select>
+        </v-flex>
+        <v-flex xs12 md6>
+          <v-text-field label="Estimated Duration" v-model="item.aproximateDuration"></v-text-field>
+        </v-flex>
+        <v-btn raised primary @click="saveItem">Save</v-btn>
       </v-layout>
     </v-card-text>
   </v-card>
@@ -36,10 +46,18 @@ export default {
   props: ['itemId'],
   data () {
     return {
-      item: null
+      item: null,
+      users: []
     }
   },
+  dependencies: ['UserService'],
   methods: {
+    saveItem () {
+      console.log(this.item)
+      const item = this.item
+      delete item['.key']
+      this.$firebaseRefs.item.update(this.item)
+    }
   },
   watch: {
     itemId () {
@@ -47,7 +65,14 @@ export default {
     }
   },
   created () {
-    this.$bindAsObject('item', firebase.database().ref(`/item/${this.itemId}`))
+    this.$bindAsObject('item', firebase.database().ref(`/items/${this.itemId}`))
+    console.log(this.item)
+
+    this.UserService.getUsers()
+    .then(users => {
+      this.users = users
+      console.log(this.users)
+    })
   }
 }
 </script>
