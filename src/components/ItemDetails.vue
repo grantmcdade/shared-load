@@ -53,8 +53,7 @@ export default {
   dependencies: ['UserService'],
   methods: {
     saveItem () {
-      this.$firebaseRefs.
-      item.update(this.item)
+      this.$firebaseRefs.item.update(this.item)
     }
   },
   created () {
