@@ -31,7 +31,7 @@
           <v-select :items="users" item-text="name" item-value="uid" v-model="item.assignedTo" label="Assigned To"></v-select>
         </v-flex>
         <v-flex xs12 md6>
-          <v-text-field label="Estimated Duration" v-model="item.aproximateDuration"></v-text-field>
+          <v-text-field label="Estimated Duration" v-model="item.aproximateDuration" suffix="minutes"></v-text-field>
         </v-flex>
         <v-btn raised primary @click="saveItem">Save</v-btn>
       </v-layout>
@@ -53,25 +53,16 @@ export default {
   dependencies: ['UserService'],
   methods: {
     saveItem () {
-      console.log(this.item)
-      const item = this.item
-      delete item['.key']
-      this.$firebaseRefs.item.update(this.item)
-    }
-  },
-  watch: {
-    itemId () {
-
+      this.$firebaseRefs.
+      item.update(this.item)
     }
   },
   created () {
     this.$bindAsObject('item', firebase.database().ref(`/items/${this.itemId}`))
-    console.log(this.item)
 
     this.UserService.getUsers()
     .then(users => {
       this.users = users
-      console.log(this.users)
     })
   }
 }

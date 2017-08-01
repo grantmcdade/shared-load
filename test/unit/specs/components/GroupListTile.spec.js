@@ -58,7 +58,7 @@ describe('GroupListTile.vue', function () {
 
   it('should render the actions', function () {
     const items = vm.$el.querySelectorAll('v-list-tile-action')
-    expect(items.length).to.equal(4)
+    expect(items.length).to.equal(8)
     expect(items[1].querySelector('v-icon').textContent).to.equal('mode_edit')
   })
 

@@ -15,7 +15,6 @@ export default class UserService {
             if (userList.hasOwnProperty(key)) {
               var user = userList[key]
               user.uid = key
-              user.name = 'Test'
               users.push(user)
             }
           }

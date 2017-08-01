@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import Service from '@/services/groups-service'
+import Service from '@/services/groups'
 
 describe('Groups Service', function () {
   const group = {
