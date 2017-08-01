@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import GroupService from './services/groups'
 import UserService from './services/users'
 
-import config from '../local-settings'
+import config from '../temp-settings'
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(config.firebase)
