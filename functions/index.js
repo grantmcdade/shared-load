@@ -1,65 +1,34 @@
+/*
+This file is part of Shared Load.
+
+Shared Load is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Shared Load is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Shared Load.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 admin.initializeApp(functions.config().firebase)
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 
 exports.recordUser = functions.auth.user().onCreate(event => {
   // Save the new user's info
   const user = event.data
   const userInfo = {
     uid: user.uid,
-    name: user.name || '',
+    name: user.name || user.email || '',
     email: user.email,
-    displayname: user.displayname || ''
+    displayname: user.displayname || user.email || ''
   }
 
   const ref = admin.database().ref(`/users/${user.uid}`)
   return ref.set(userInfo)
 })
-
-// exports.userAddGroup = functions.database.ref('/group_users/{groupId}/{userId}').onWrite(event => {
-//   const user = event.data.val()
-//   console.log('Received: ', event)
-//   if (user) {
-//     // User was added
-//     const ref = event.data.ref.root.child(`/users/${user.uid}/group_memberships`)
-//     return ref.push(event.params.groupId)
-//       .then(resolve => {
-//         console.log('Done!')
-//         resolve()
-//       })
-//   } else {
-//     // User was removed
-//     const oldUser = event.data.previous.val()
-//     console.log('Removing membership for...', oldUser)
-//     const ref = event.data.ref.root.child(`/users/${oldUser.uid}/group_memberships`)
-//     ref.once('value', snap => {
-//       const groupMemberships = snap.val()
-//       for (var key in groupMemberships) {
-//         if (groupMemberships.hasOwnProperty(key)) {
-//           var groupId = groupMemberships[key]
-//           console.log('Processing...', key, ' with group id ', groupId)
-//           if (groupId === event.params.groupId) {
-//             console.log('Removing...', key)
-//             return ref.child(key).remove()
-//               .then(resolve => {
-//                 console.log('Done!')
-//                 resolve()
-//               })
-//           }
-//         }
-//       }
-//     })
-//   }
-// })
-
-// exports.groupCreated = functions.database.ref('/users/{uid}/my_groups/{groupId}').onCreate(event => {
-//   console.log(event)
-//   // TODO: Add the current user as a group user
-// })

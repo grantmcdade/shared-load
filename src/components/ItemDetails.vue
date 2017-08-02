@@ -53,7 +53,9 @@ export default {
   dependencies: ['UserService'],
   methods: {
     saveItem () {
-      this.$firebaseRefs.item.update(this.item)
+      const item = Object.assign({}, this.item)
+      delete item['.key']
+      this.$firebaseRefs.item.update(item)
     }
   },
   created () {

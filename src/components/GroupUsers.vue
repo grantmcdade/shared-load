@@ -82,7 +82,7 @@ export default {
       }
     },
     addUser () {
-      if (this.errors.has('email')) {
+      if (this.validate() !== undefined) {
         return
       }
 

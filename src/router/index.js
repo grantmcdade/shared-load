@@ -90,7 +90,17 @@ export default new Router({
     },
     {
       path: '/login',
-      component: Login
+      component: Login,
+      beforeEnter(to, from, next) {
+        const unsub = firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            next('/')
+          } else {
+            next()
+          }
+          unsub()
+        })
+      }
     },
     {
       path: '/logout',
