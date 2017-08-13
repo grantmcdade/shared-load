@@ -54,12 +54,15 @@ const app = new Vue({
 
     firebase.auth().onAuthStateChanged(u => {
       const user = {
-        id: u.uid,
+        uid: u.uid,
         name: u.displayName || u.name || u.email,
         email: u.email
       }
       setUser(user)
     })
+
+    injector.constant('firebase', firebase)
+    injector.factory('db', firebase.database)
   }
 })
 

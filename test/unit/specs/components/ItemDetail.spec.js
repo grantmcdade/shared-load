@@ -34,6 +34,11 @@ describe('ItemDetails.vue', function () {
       },
       install (Vue, inj) {
         Vue.use(injector)
+        inj.service('FirebaseService', () => {
+          return {
+            bindObject: sinon.stub()
+          }
+        })
         inj.service('UserService', () => {
           return {
             getUsers: sinon.stub().returns({ then (cb) { cb(users) } })
@@ -53,7 +58,7 @@ describe('ItemDetails.vue', function () {
 
   it('should have the correct item ID', function () {
     expect(vm.itemId).to.equal('test_key')
-    expect(vm.$bindAsObject).to.have.been.called
+    expect(vm.FirebaseService.bindObject).to.have.been.called
     expect(vm.UserService.getUsers).to.have.been.called
   })
 

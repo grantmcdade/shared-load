@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 export default {
   props: ['itemId'],
@@ -50,7 +50,7 @@ export default {
       users: []
     }
   },
-  dependencies: ['UserService'],
+  dependencies: ['FirebaseService', 'UserService'],
   methods: {
     saveItem () {
       const item = Object.assign({}, this.item)
@@ -59,7 +59,8 @@ export default {
     }
   },
   created () {
-    this.$bindAsObject('item', firebase.database().ref(`/items/${this.itemId}`))
+    this.item = this.item || {}
+    this.FirebaseService.bindObject(`/items/${this.itemId}`, this.item)
 
     this.UserService.getUsers()
     .then(users => {
