@@ -1,5 +1,5 @@
 <p class="center">
-<a href="#" id="status-image-popup" title="Latest push build on default branch: passed" name="status-images" class="open-popup" data-ember-action="" data-ember-action-779="779">
+<a href="https://travis-ci.org/grantmcdade/shared-load" id="status-image-popup" title="Latest push build on default branch: passed" name="status-images" class="open-popup" data-ember-action="" data-ember-action-779="779">
           <img src="https://travis-ci.org/grantmcdade/shared-load.svg?branch=master" alt="build:passed">
 </a>
 </p>
